@@ -1,0 +1,44 @@
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, vendor/assets/stylesheets,
+ * or any plugin's vendor/assets/stylesheets directory can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the bottom of the
+ * compiled file so the styles you add here take precedence over styles defined in any styles
+ * defined in the other CSS/SCSS files in this directory. It is generally better to create a new
+ * file per style scope.
+ *
+ *= require_tree .
+ *= require_self
+ */
+
+.board {
+  width: 816px;
+  height: 816px;
+  border: solid;
+  border-width: 5px;
+}
+
+.tile {
+  position: relative;
+  float: left;
+  width: 98px;
+  height: 98px;
+  border: solid;
+  border-width: 2px;
+}
+
+.row_0 .tile:nth-child(even),
+.row_2 .tile:nth-child(even),
+.row_4 .tile:nth-child(even),
+.row_6 .tile:nth-child(even) {
+  background-color: grey;
+}
+.row_1 .tile:nth-child(odd),
+.row_3 .tile:nth-child(odd),
+.row_5 .tile:nth-child(odd),
+.row_7 .tile:nth-child(odd) {
+  background-color: grey;
+}
