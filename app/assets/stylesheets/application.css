@@ -30,15 +30,45 @@
   border-width: 2px;
 }
 
-.row_0 .tile:nth-child(even),
-.row_2 .tile:nth-child(even),
-.row_4 .tile:nth-child(even),
-.row_6 .tile:nth-child(even) {
+.tile img {
+  padding: 15px;
+}
+
+.tile:nth-child(16n+2) {
   background-color: grey;
 }
-.row_1 .tile:nth-child(odd),
-.row_3 .tile:nth-child(odd),
-.row_5 .tile:nth-child(odd),
-.row_7 .tile:nth-child(odd) {
+
+.tile:nth-child(16n+4) {
   background-color: grey;
+}
+
+.tile:nth-child(16n+6) {
+  background-color: grey;
+}
+
+.tile:nth-child(16n+8) {
+  background-color: grey;
+}
+
+.tile:nth-child(16n+9) {
+  background-color: grey;
+}
+
+.tile:nth-child(16n+11) {
+  background-color: grey;
+}
+
+.tile:nth-child(16n+13) {
+  background-color: grey;
+}
+
+.tile:nth-child(16n+15) {
+  background-color: grey;
+}
+
+
+
+
+.tile:hover {
+  background-color: yellow;
 }

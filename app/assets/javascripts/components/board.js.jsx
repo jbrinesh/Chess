@@ -3,37 +3,58 @@
 
   root.Board = React.createClass({
 
+    getInitialState: function (){
+      return ({ board: BoardStore.all() })
+    },
+
+    componentDidMount: function (){
+      BoardStore.addChangeHandler(this._updateBoard);
+    },
+
+    componentWillUnmount: function(){
+      BoardStore.removeChangeHandler(this._updateBoard);
+    },
+
+    _updateBoard: function(){
+      this.setState({ board: BoardStore.all()})
+    },
+
     render: function (){
+      var board = this.state.board;
       var tiles = [];
       for(var i = 0; i < 8; i++){
-        tiles.push(<Tile key={i}/>)
+        for(var j = 0; j < 8; j++){
+
+          var tile_piece = board.find(function(piece){
+            if(piece.position[0] === i && piece.position[1] === j){
+              return true;
+            } else {
+              return false;
+            }
+          })
+
+          if(tile_piece){
+            tiles.push(
+              <Tile
+                key={"(" + i + "," + j + ")"}
+                id={"(" + i + "," + j + ")"}
+                color={tile_piece.color}
+                kind={tile_piece.kind}
+              />
+            )
+          } else {
+            tiles.push(
+              <Tile
+                key={"(" + i + "," + j + ")"}
+                id={"(" + i + "," + j + ")"}
+              />
+            )
+          }
+        }
       }
       return (
-        <div className="board">
-          <div className="row_0">
+        <div className="board clearfix">
             {tiles}
-          </div>
-          <div className="row_1">
-            {tiles}
-          </div>
-          <div className="row_2">
-            {tiles}
-          </div>
-          <div className="row_3">
-            {tiles}
-          </div>
-          <div className="row_4">
-            {tiles}
-          </div>
-          <div className="row_5">
-            {tiles}
-          </div>
-          <div className="row_6">
-            {tiles}
-          </div>
-          <div className="row_7">
-            {tiles}
-          </div>
         </div>
       )
     }
