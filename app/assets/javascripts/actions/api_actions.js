@@ -2,6 +2,7 @@
   'use strict';
 
   root.ApiActions = {
+
     recivedBoard: function(board){
       var action = {
         actionType: Constants.RECIVED_BOARD,
@@ -9,8 +10,13 @@
       }
       AppDispatcher.dispatch(action);
     },
+
     recivedValidMoves: function(positions){
-      debugger;
+      var action = {
+        actionType: Constants.RECIVED_VALID_MOVES,
+        positions: positions
+      }
+      AppDispatcher.dispatch(action);
     }
   }
 }(this));

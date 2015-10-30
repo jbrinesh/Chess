@@ -24,8 +24,7 @@
         dataType: "json",
         data: params,
         success: function(response){
-          debugger;
-          // ApiActions.recivedValidMoves(response);
+          ApiActions.recivedValidMoves(response);
         }
       })
     },

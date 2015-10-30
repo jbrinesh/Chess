@@ -2,15 +2,33 @@
   'use strict';
 
   var _board = [];
+  var _selected = null;
+  var _valid_moves = [];
 
   var resetBoard = function(board){
     _board = board;
   };
 
+  var selectPosition = function(position){
+    _selected = position;
+  };
+
+  var resetValidMoves = function(positions){
+    _valid_moves = positions;
+  };
+
   root.BoardStore = $.extend ({}, EventEmitter.prototype, {
 
-    all: function(){
+    board: function(){
       return _board.slice(0);
+    },
+
+    selected: function(){
+      return _selected
+    },
+
+    validMoves: function(){
+      return _valid_moves.slice(0);
     },
 
     addChangeHandler: function(handler){
@@ -26,6 +44,18 @@
 
         case Constants.RECIVED_BOARD:
         resetBoard(payload.board);
+        BoardStore.emit(Constants.BOARD_CHANGED);
+        break;
+
+        case Constants.POSITION_SELECTED:
+        selectPosition(payload.position);
+        resetValidMoves([]);
+        ApiUtil.validMoves(payload.position, BoardStore.board());
+        BoardStore.emit(Constants.BOARD_CHANGED);
+        break;
+
+        case Constants.RECIVED_VALID_MOVES:
+        resetValidMoves(payload.positions);
         BoardStore.emit(Constants.BOARD_CHANGED);
         break;
       }

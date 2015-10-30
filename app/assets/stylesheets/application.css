@@ -66,8 +66,16 @@
   background-color: grey;
 }
 
-.tile:hover {
+.occupied-white:hover {
   background-color: yellow;
+}
+
+.highlighted:nth-child(n) {
+  background-color: green;
+}
+
+.selected:nth-child(n) {
+  background-color: red;
 }
 
 .new-game-button {
