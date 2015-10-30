@@ -63,6 +63,22 @@
                 kind={tile_piece.kind}
               />
             )
+          } else if (tile_piece && tile_piece.color === "black" && validMoves.some(function(el){
+            if (el[0] === i && el[1] === j){
+              return true
+            } else{
+              return false
+            }
+          })){
+            tiles.push(
+              <Tile
+                classProp="occupied-black highlighted tile"
+                key={"(" + i + "," + j + ")"}
+                id={"(" + i + "," + j + ")"}
+                color={tile_piece.color}
+                kind={tile_piece.kind}
+              />
+            )
           } else if(tile_piece && tile_piece.color === "black"){
             tiles.push(
               <Tile
@@ -73,7 +89,7 @@
                 kind={tile_piece.kind}
               />
             )
-          }else if (validMoves.some(function(el){
+          } else if (validMoves.some(function(el){
             if (el[0] === i && el[1] === j){
               return true
             } else{

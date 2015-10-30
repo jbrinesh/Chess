@@ -29,7 +29,7 @@ module Pieceable
     def potential_move?(to_pos)
       return false unless board[to_pos].nil? || self.color != board[to_pos].color
       self.path(to_pos).each do |sub_pos|
-        unless board[sub_pos].nil? || self.color != board[sub_pos].color
+        unless board[sub_pos].nil?
           return false
         end
       end
@@ -67,10 +67,10 @@ module Pieceable
       col_max = [pos[1],to_pos[1]].max
       col_min = [pos[1],to_pos[1]].min
       line.reject do |sub_pos|
-        sub_pos[1] > col_max ||
-        sub_pos[1] < col_min ||
-        sub_pos[0] > row_max ||
-        sub_pos[0] < row_min
+        sub_pos[1] >= col_max ||
+        sub_pos[1] <= col_min ||
+        sub_pos[0] >= row_max ||
+        sub_pos[0] <= row_min
       end
     end
 

@@ -17,6 +17,34 @@
     _valid_moves = positions;
   };
 
+  var makeMove = function(position){
+    var board = _board.slice(0);
+    var selected = _selected.slice(0)
+    var piece = board.find(function(el){
+      if (el.position[0] === selected[0] && el.position[1] === selected[1]){
+        return true
+      } else {
+        return false
+      }
+    })
+    var taken_piece = board.find(function(el){
+      if (el.position[0] === position[0] && el.position[1] === position[1]){
+        return true
+      } else {
+        return false
+      }
+    })
+    if (taken_piece){
+      var idx = board.indexOf(taken_piece);
+      board = board.slice(0, idx).concat(board.slice(idx + 1));
+      debugger;
+    }
+    piece.position = position;
+    resetBoard(board);
+    selectPosition(null);
+    resetValidMoves([]);
+  };
+
   root.BoardStore = $.extend ({}, EventEmitter.prototype, {
 
     board: function(){
@@ -58,6 +86,13 @@
         resetValidMoves(payload.positions);
         BoardStore.emit(Constants.BOARD_CHANGED);
         break;
+
+        case Constants.MAKE_MOVE:
+        makeMove(payload.position);
+        BoardStore.emit(Constants.BOARD_CHANGED);
+        break;
+
+
       }
     })
   })

@@ -4,10 +4,19 @@
   root.Tile = React.createClass({
 
     _handleClick: function(e){
-      if(this.props.color == "white"){
-        var pos_str = e.currentTarget.id;
-        var position =[parseInt(pos_str[1]), parseInt(pos_str[3])];
+      var pos_str = e.currentTarget.id;
+      var position =[parseInt(pos_str[1]), parseInt(pos_str[3])];
+      var validMoves = BoardStore.validMoves();
+      if(this.props.color && this.props.color == "white"){
         BoardActions.selectPosition(position);
+      } else if (validMoves.some(function(el){
+        if(el[0] === position[0] && el[1] === position[1]){
+          return true
+        } else {
+          return false
+        }
+      })) {
+        BoardActions.makeMove(position);
       }
     },
 

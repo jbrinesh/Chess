@@ -8,6 +8,14 @@
         position: position
       }
       AppDispatcher.dispatch(action);
+    },
+
+    makeMove: function(position){
+      var action ={
+        actionType: Constants.MAKE_MOVE,
+        position: position
+      }
+      AppDispatcher.dispatch(action);
     }
 
   }
