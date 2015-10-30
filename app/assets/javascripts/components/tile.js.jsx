@@ -3,6 +3,15 @@
 
   root.Tile = React.createClass({
 
+    _handleClick: function(e){
+      if(this.props.kind){
+        var pos_str = e.currentTarget.id;
+        var pos =[parseInt(pos_str[1]), parseInt(pos_str[3])];
+        var board = BoardStore.all();
+        ApiUtil.validMoves(pos, board)
+      }
+    },
+
     _imageUrl: function(){
       var images = {
         black: {
@@ -29,7 +38,7 @@
 
     render: function (){
       return(
-        <div className="tile" id={this.props.id}>
+        <div className="tile" id={this.props.id} onClick={this._handleClick}>
            {this.props.kind ? <img src={this._imageUrl()}/> : null}
         </div>
       )

@@ -8,6 +8,9 @@
         board: board
       }
       AppDispatcher.dispatch(action);
+    },
+    recivedValidMoves: function(positions){
+      debugger;
     }
   }
 }(this));

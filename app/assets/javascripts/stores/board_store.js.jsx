@@ -4,8 +4,6 @@
   var _board = [];
 
   var resetBoard = function(board){
-    debugger;
-
     _board = board;
   };
 

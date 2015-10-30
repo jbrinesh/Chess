@@ -1,4 +1,14 @@
+
+
 class Board < ActiveRecord::Base
+  # include Pieceable
+  # include Pawnable
+  # include Kingable
+  # include Queenable
+  # include Knightable
+  # include Bishopable
+  # include Rookable
+  include BoardGridable
 
   def self.createBoard(board, game)
     board.each do |piece|
@@ -11,4 +21,13 @@ class Board < ActiveRecord::Base
       )
     end
   end
+
+  def self.get_valid_moves(pos, board)
+    board_grid = BoardGrid.new()
+    board_grid.add_pieces(board)
+    pos = pos.map{|el| el.to_i}
+    piece = board_grid[pos]
+    piece.potential_moves
+  end
+
 end

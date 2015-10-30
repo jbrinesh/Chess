@@ -1,6 +1,6 @@
 class Api::GameController < ApplicationController
 
-  def index
+  def new_game
     result = Game.new_game
     board = result[0]
     game = result[1]
