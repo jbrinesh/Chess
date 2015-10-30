@@ -29,8 +29,21 @@
       })
     },
 
-    playTurn: function(){
-
+    playTurn: function(from_pos, to_pos, board){
+      var params = {
+        from_pos: from_pos,
+        to_pos: to_pos,
+        board: board
+      }
+      $.ajax({
+        url: "api/board/play_turn",
+        type: "POST",
+        dataType: "json",
+        data: params,
+        success: function(response){
+          ApiActions.recivedBoard(response);
+        }
+      })
     }
   }
 }(this));

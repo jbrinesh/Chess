@@ -4,11 +4,15 @@ class Api::BoardController < ApplicationController
      board = params['board']
      pos = params['pos']
      output = Board.get_valid_moves(pos, board);
-     render json: output 
+     render json: output
   end
 
   def play_turn
-    debugger;
+    board = params['board']
+    from_pos = params['from_pos']
+    to_pos = params['to_pos']
+    output = Board.get_AI_move(from_pos, to_pos, board);
+    render json: output
   end
 
 

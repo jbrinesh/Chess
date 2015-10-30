@@ -24,6 +24,19 @@ module BoardGridable
       @grid = Array.new(8) { Array.new(8) { } }
     end
 
+    def all_black_moves
+      all_moves = []
+      self.grid.flatten.each do |piece|
+        if piece && piece.color == "black"
+          piece.potential_moves.each do |to_pos|
+            move = [piece.pos, to_pos]
+            all_moves << move
+           end
+        end
+      end
+      return all_moves
+    end
+
     def add_pieces(board_pieces)
       board_pieces.each do |el|
         pos = el[1]["position"].map{|num| num.to_i}

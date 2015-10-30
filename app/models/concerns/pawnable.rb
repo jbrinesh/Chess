@@ -26,14 +26,13 @@ module Pawnable
       combos.map! do |combo|
          combo = [position[0] + combo[0], position[1] + combo[1]]
       end
-      unless (color == "black" && pos[0] != 1) || (color == "white" && pos[0] != 6)
+      if (color == "black" && pos[0] == 1) || (color == "white" && pos[0] == 6)
         combos << [position[0] + add, position[1]]
       end
       combos.select { |combo| on_board?(combo) }
     end
 
     def potential_move?(to_pos)
-
       return false unless super
       if pos[1] == to_pos[1]
         return false unless board[to_pos].nil?
@@ -44,12 +43,13 @@ module Pawnable
     end
 
     def path(to_pos)
-      if (color == "black" && pos[0] != 1 && to_pos[0] == 3) ||
-         (color == "white" && pos[0] != 6 && to_pos[0] == 4)
-        return [pos[0] + 1, pos[1]]
+      if (color == "black" && pos[0] == 1 && to_pos[0] == 3)
+        return [[pos[0] + 1, pos[1]]]
+      elsif (color == "white" && pos[0] == 6 && to_pos[0] == 4)
+        return [[pos[0] - 1, pos[1]]]
       else
         return []
-      end 
+      end
     end
 
     def on_board?(pos)

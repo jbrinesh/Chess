@@ -4,8 +4,12 @@
   var _board = [];
   var _selected = null;
   var _valid_moves = [];
+  var _thinking = false;
 
   var resetBoard = function(board){
+    _thinking = false;
+    _selected = null;
+    _valid_moves = [];
     _board = board;
   };
 
@@ -18,8 +22,11 @@
   };
 
   var makeMove = function(position){
+    _thinking = true;
     var board = _board.slice(0);
     var selected = _selected.slice(0)
+    ApiUtil.playTurn(selected, position, board);
+
     var piece = board.find(function(el){
       if (el.position[0] === selected[0] && el.position[1] === selected[1]){
         return true
