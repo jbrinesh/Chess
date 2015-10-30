@@ -8,7 +8,6 @@ module Pieceable
   include Slidable
 
   class Piece
-    attr_reader
 
     def present?
       true
@@ -37,40 +36,34 @@ module Pieceable
     end
 
     def path(to_pos)
-      # temp_board = board.deep_dup
-      # if pos[0] == to_pos[0] || pos[1] == to_pos[1]
-      #   temp_board[to_pos] = Rookable::Rook.new("black",to_pos,temp_board)
-      #   temp_board[pos] = Rookable::Rook.new("black",pos,temp_board)
-      # else
-      #   temp_board[to_pos] = Bishopable::Bishop.new("black",to_pos,temp_board)
-      #   temp_board[pos] = Bishopable::Bishop.new("black",pos,temp_board)
-      # end
-      # line = temp_board[pos].all_moves & temp_board[to_pos].all_moves
-      # if pos[0] == to_pos[0]
-      #   max = [pos[1],to_pos[1]].max
-      #   min = [pos[1],to_pos[1]].min
-      #   line.reject { |sub_pos| sub_pos[1] > max || sub_pos[1] < min }
-      # else
-      #   max = [pos[0],to_pos[0]].max
-      #   min = [pos[0],to_pos[0]].min
-      #   line.reject { |sub_pos| sub_pos[0] > max || sub_pos[0] < min }
-      # end
-
-      if pos[0] == to_pos[0] || pos[1] == to_pos[1]
-        line = all_horizontal
-      else
-        line = all_diagonal
-      end
-
       row_max = [pos[0],to_pos[0]].max
       row_min = [pos[0],to_pos[0]].min
       col_max = [pos[1],to_pos[1]].max
       col_min = [pos[1],to_pos[1]].min
-      line.reject do |sub_pos|
-        sub_pos[1] >= col_max ||
-        sub_pos[1] <= col_min ||
-        sub_pos[0] >= row_max ||
-        sub_pos[0] <= row_min
+      if pos[0] == to_pos[0]
+        line = all_horizontal
+        line.reject do |sub_pos|
+          sub_pos[1] >= col_max ||
+          sub_pos[1] <= col_min ||
+          sub_pos[0] > row_max ||
+          sub_pos[0] < row_min
+        end
+      elsif pos[1] == to_pos[1]
+        line = all_horizontal
+        line.reject do |sub_pos|
+          sub_pos[1] > col_max ||
+          sub_pos[1] < col_min ||
+          sub_pos[0] >= row_max ||
+          sub_pos[0] <= row_min
+        end
+      else
+        line = all_diagonal
+        line.reject do |sub_pos|
+          sub_pos[1] >= col_max ||
+          sub_pos[1] <= col_min ||
+          sub_pos[0] >= row_max ||
+          sub_pos[0] <= row_min
+        end
       end
     end
 

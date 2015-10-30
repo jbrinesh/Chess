@@ -37,7 +37,6 @@
     if (taken_piece){
       var idx = board.indexOf(taken_piece);
       board = board.slice(0, idx).concat(board.slice(idx + 1));
-      debugger;
     }
     piece.position = position;
     resetBoard(board);
