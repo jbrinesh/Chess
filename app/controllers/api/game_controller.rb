@@ -9,5 +9,10 @@ class Api::GameController < ApplicationController
     render json: board
   end
 
+  def continue_game
+    session_token = session[:session_token]
+    @board = Game.find_game(session_token)
+    render 'board'
+  end
 
 end

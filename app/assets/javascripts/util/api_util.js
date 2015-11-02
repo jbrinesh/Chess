@@ -44,6 +44,19 @@
           ApiActions.recivedBoard(response);
         }
       })
+    },
+
+    continueGame: function(){
+      $.ajax({
+        url: "api/game/continue_game",
+        type: "GET",
+        dataType: "json",
+        success: function(response){
+          ApiActions.recivedBoard(response);
+        }
+      })
     }
+
+
   }
 }(this));

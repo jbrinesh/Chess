@@ -9,7 +9,7 @@
 
     render: function(){
       return (
-        <button className="new-game-button" onClick={this._handleClick}>New Game?</button>
+        <button className="new-game-button" onClick={this._handleClick}>New Game</button>
       )
     }
   })

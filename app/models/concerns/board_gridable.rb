@@ -38,11 +38,11 @@ module BoardGridable
     end
 
     def add_pieces(board_pieces)
-      board_pieces.each do |el|
-        pos = el[1]["position"].map{|num| num.to_i}
-        class_name = el[1]["kind"].capitalize
-        module_name = (el[1]["kind"] + "able").capitalize
-        @grid[pos[0]][pos[1]] = (module_name + "::" + class_name).constantize.new(el[1]["color"], pos, self)
+      board_pieces.each do |piece|
+        pos = [piece.row_pos, piece.col_pos]
+        class_name = piece.kind.capitalize
+        module_name = (piece.kind + "able").capitalize
+        @grid[pos[0]][pos[1]] = (module_name + "::" + class_name).constantize.new(piece.color, pos, self)
       end
     end
 

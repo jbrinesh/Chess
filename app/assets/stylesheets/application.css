@@ -15,8 +15,10 @@
  */
 
 .board {
-  width: 816px;
-  height: 816px;
+  position: relative;
+  clear: both;
+  height: 616px;
+  width: 616px;
   border: solid;
   border-width: 5px;
 }
@@ -24,14 +26,14 @@
 .tile {
   position: relative;
   float: left;
-  width: 98px;
-  height: 98px;
+  width: 73px;
+  height: 73px;
   border: solid;
   border-width: 2px;
 }
 
 .tile img {
-  padding: 15px;
+  padding: 5px;
 }
 
 .tile:nth-child(16n+2) {
@@ -78,10 +80,20 @@
   background-color: red;
 }
 
-.new-game-button {
+.dialog-display {
   position: relative;
-  margin: 0 auto;
-  width: 200px;
+  clear: both;
+  width: 570px;
+  height: 92px;
+  border: solid;
+  border-width: 6px;
+}
+
+button {
+  position: relative;
+  float: left;
+  margin: 15px;
+  width: 180px;
   height: 50px;
   font-size: 20px;
 }

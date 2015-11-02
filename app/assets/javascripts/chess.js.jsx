@@ -7,6 +7,8 @@ var App = React.createClass({
     return(
       <div className="clearfix">
         <NewGameButton/>
+        <ContinueGameButton/>
+        <SaveGameButton/>
         <Board/>
       </div>
     )

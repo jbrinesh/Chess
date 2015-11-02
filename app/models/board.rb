@@ -1,14 +1,11 @@
 
-
 class Board < ActiveRecord::Base
-  # include Pieceable
-  # include Pawnable
-  # include Kingable
-  # include Queenable
-  # include Knightable
-  # include Bishopable
-  # include Rookable
+
   include BoardGridable
+
+  validates :game_id, :row_pos, :col_pos, :kind, :color, presence: true
+
+  belongs_to :game
 
   def self.createBoard(board, game)
     board.each do |piece|
@@ -30,32 +27,36 @@ class Board < ActiveRecord::Base
     piece.potential_moves
   end
 
-  def self.get_AI_move(from_pos, to_pos, board)
-    board_grid = BoardGrid.new()
-    board_grid.add_pieces(board)
-    from_pos = from_pos.map{|el| el.to_i}
-    to_pos = to_pos.map{|el| el.to_i}
-    piece = board_grid[from_pos]
-    if board_grid[to_pos]
-      board_grid[to_pos] = nil
-    end
-    piece.pos = to_pos
-    all_moves = board_grid.all_black_moves
-    move = all_moves.shuffle.first
-    moving_piece = board_grid[move[0]]
-    moving_piece.pos = move[1]
-    new_board = [];
-    board_grid.grid.flatten.each do |piece|
-      unless piece.nil?
-        el = {
-          position: piece.pos,
-          color: piece.color,
-          kind: piece.class.to_s.split("::")[1].downcase
-        }
-        new_board << el
+  def self.make_move(from_pos, to_pos, board)
+    moving_piece = board.find do |piece|
+      if piece.row_pos == from_pos[0] && piece.col_pos == from_pos[1]
+         true
+      else
+        false
       end
     end
-    return new_board
+    taken_piece = board.find do |piece|
+      if piece.row_pos == to_pos[0] && piece.col_pos == to_pos[1]
+         true
+      else
+        false
+      end
+    end
+    moving_piece.row_pos = to_pos[0]
+    moving_piece.col_pos = to_pos[1]
+    Board.update(moving_piece.id, :row_pos => moving_piece.row_pos, :col_pos => moving_piece.col_pos)
+    unless taken_piece.nil?
+      Board.delete(taken_piece.id)
+      board.delete(taken_piece)
+    end
+    return board
+  end
+
+  def self.get_AI_move(board)
+    board_grid = BoardGrid.new()
+    board_grid.add_pieces(board)
+    all_moves = board_grid.all_black_moves
+    move = all_moves.shuffle.first
   end
 
 end
