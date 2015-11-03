@@ -7,25 +7,31 @@
   var _thinking = false;
 
   var resetBoard = function(board){
-    _thinking = false;
     _selected = null;
     _valid_moves = [];
     _board = board;
+  };
+
+  var toggleThinking = function(){
+    _thinking = !_thinking;
   };
 
   var selectPosition = function(position){
     _selected = position;
   };
 
-  var resetValidMoves = function(positions){
+  var setValidMoves = function(positions){
     _valid_moves = positions;
   };
 
+  var resetValidMoves = function(){
+    _valid_moves = [];
+  };
+
   var makeMove = function(position){
-    _thinking = true;
     var board = _board.slice(0);
     var selected = _selected.slice(0)
-    ApiUtil.playTurn(selected, position, board);
+    ApiUtil.playTurn(selected, position);
 
     var piece = board.find(function(el){
       if (el.position[0] === selected[0] && el.position[1] === selected[1]){
@@ -47,8 +53,6 @@
     }
     piece.position = position;
     resetBoard(board);
-    selectPosition(null);
-    resetValidMoves([]);
   };
 
   root.BoardStore = $.extend ({}, EventEmitter.prototype, {
@@ -58,11 +62,15 @@
     },
 
     selected: function(){
-      return _selected
+      return _selected;
     },
 
     validMoves: function(){
       return _valid_moves.slice(0);
+    },
+
+    thinking: function(){
+      return _thinking;
     },
 
     addChangeHandler: function(handler){
@@ -77,23 +85,25 @@
       switch (payload.actionType){
 
         case Constants.RECIVED_BOARD:
+        toggleThinking();
         resetBoard(payload.board);
         BoardStore.emit(Constants.BOARD_CHANGED);
         break;
 
         case Constants.POSITION_SELECTED:
         selectPosition(payload.position);
-        resetValidMoves([]);
+        resetValidMoves();
         ApiUtil.validMoves(payload.position, BoardStore.board());
         BoardStore.emit(Constants.BOARD_CHANGED);
         break;
 
         case Constants.RECIVED_VALID_MOVES:
-        resetValidMoves(payload.positions);
+        setValidMoves(payload.positions);
         BoardStore.emit(Constants.BOARD_CHANGED);
         break;
 
         case Constants.MAKE_MOVE:
+        toggleThinking();
         makeMove(payload.position);
         BoardStore.emit(Constants.BOARD_CHANGED);
         break;

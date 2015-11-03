@@ -3,23 +3,6 @@
 
   root.Tile = React.createClass({
 
-    _handleClick: function(e){
-      var pos_str = e.currentTarget.id;
-      var position =[parseInt(pos_str[1]), parseInt(pos_str[3])];
-      var validMoves = BoardStore.validMoves();
-      if(this.props.color && this.props.color == "white"){
-        BoardActions.selectPosition(position);
-      } else if (validMoves.some(function(el){
-        if(el[0] === position[0] && el[1] === position[1]){
-          return true
-        } else {
-          return false
-        }
-      })) {
-        BoardActions.makeMove(position);
-      }
-    },
-
     _imageUrl: function(){
       var images = {
         black: {
@@ -46,7 +29,7 @@
 
     render: function (){
       return(
-        <div className="tile" className={this.props.classProp} id={this.props.id} onClick={this._handleClick}>
+        <div className="tile" className={this.props.classProp} id={this.props.id} onClick={this.props.handleClick}>
            {this.props.kind ? <img src={this._imageUrl()}/> : null}
         </div>
       )

@@ -7,7 +7,8 @@
       return ({
         board: BoardStore.board(),
         selected: BoardStore.selected(),
-        validMoves: BoardStore.validMoves()
+        validMoves: BoardStore.validMoves(),
+        thinking: false
       })
     },
 
@@ -23,11 +24,33 @@
       this.setState({
         board: BoardStore.board(),
         selected: BoardStore.selected(),
-        validMoves: BoardStore.validMoves()
+        validMoves: BoardStore.validMoves(),
+        thinking: BoardStore.thinking()
       })
     },
 
+    _handleClick: function(e){
+      if (this.state.thinking !== true){
+        var pos_str = e.currentTarget.id;
+        var position =[parseInt(pos_str[1]), parseInt(pos_str[3])];
+        var validMoves = BoardStore.validMoves();
+        if(e.currentTarget.classList[0] === "occupied-white"){
+          BoardActions.selectPosition(position);
+        } else if (validMoves.some(function(el){
+          if(el[0] === position[0] && el[1] === position[1]){
+            return true
+          } else {
+            return false
+          }
+        })) {
+          BoardActions.makeMove(position);
+        }
+      }
+    },
+
+
     render: function (){
+      var that = this;
       var board = this.state.board;
       var selected = this.state.selected;
       var validMoves = this.state.validMoves;
@@ -46,6 +69,7 @@
           if (selected !== null && i === selected[0] && j === selected[1]){
             tiles.push(
               <Tile
+                handleClick={that._handleClick}
                 classProp="selected tile"
                 key={"(" + i + "," + j + ")"}
                 id={"(" + i + "," + j + ")"}
@@ -56,6 +80,7 @@
           } else if(tile_piece && tile_piece.color === "white"){
             tiles.push(
               <Tile
+                handleClick={that._handleClick}
                 classProp="occupied-white tile"
                 key={"(" + i + "," + j + ")"}
                 id={"(" + i + "," + j + ")"}
@@ -72,6 +97,7 @@
           })){
             tiles.push(
               <Tile
+                handleClick={that._handleClick}
                 classProp="occupied-black highlighted tile"
                 key={"(" + i + "," + j + ")"}
                 id={"(" + i + "," + j + ")"}
@@ -82,6 +108,7 @@
           } else if(tile_piece && tile_piece.color === "black"){
             tiles.push(
               <Tile
+                handleClick={that._handleClick}
                 classProp="occupied-black tile"
                 key={"(" + i + "," + j + ")"}
                 id={"(" + i + "," + j + ")"}
@@ -98,6 +125,7 @@
           })){
             tiles.push(
               <Tile
+                handleClick={that._handleClick}
                 classProp="highlighted tile"
                 key={"(" + i + "," + j + ")"}
                 id={"(" + i + "," + j + ")"}
@@ -106,6 +134,7 @@
           }else {
             tiles.push(
               <Tile
+                handleClick={that._handleClick}
                 classProp="empty tile"
                 key={"(" + i + "," + j + ")"}
                 id={"(" + i + "," + j + ")"}
