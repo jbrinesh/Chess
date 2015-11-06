@@ -53,7 +53,6 @@ class Board < ActiveRecord::Base
   end
 
   def self.get_AI_move(board)
-    sleep (5)
     board_grid = BoardGrid.new()
     board_grid.add_pieces(board)
     all_moves = board_grid.all_black_moves

@@ -5,10 +5,10 @@ var IndexRoute = ReactRouter.IndexRoute;
 var App = React.createClass({
   render: function (){
     return(
-      <div className="clearfix">
+      <div className="game clearfix">
         <NewGameButton/>
         <ContinueGameButton/>
-        <SaveGameButton/>
+        <DialogDisplay/>
         <Board/>
       </div>
     )

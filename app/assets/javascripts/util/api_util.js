@@ -42,6 +42,7 @@
         data: params,
         success: function(response){
           ApiActions.recivedBoard(response);
+          // DialogActions.newMessages([]);
         }
       })
     },
@@ -53,6 +54,7 @@
         dataType: "json",
         success: function(response){
           ApiActions.recivedBoard(response);
+          // DialogActions.newMessages([]);
         }
       })
     }

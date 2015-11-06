@@ -20,6 +20,14 @@
       BoardStore.removeChangeHandler(this._updateBoard);
     },
 
+    messages: function(){
+      if (this.state.thinking){
+        return ["The AI is thinking"];
+      } else {
+        return [];
+      }
+    },
+
     _updateBoard: function(){
       this.setState({
         board: BoardStore.board(),
