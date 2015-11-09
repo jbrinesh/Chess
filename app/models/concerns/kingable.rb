@@ -1,5 +1,3 @@
-# require_relative "piece"
-
 module Kingable
   extend ActiveSupport::Concern
   class King < Pieceable::Piece

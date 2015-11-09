@@ -3,10 +3,11 @@
 
   root.ApiActions = {
 
-    recivedBoard: function(board){
+    recivedBoard: function(response){
       var action = {
         actionType: Constants.RECIVED_BOARD,
-        board: board
+        board: response.board,
+        messages: response.messages
       }
       AppDispatcher.dispatch(action);
     },

@@ -1,5 +1,3 @@
-# require_relative "piece"
-
 module Knightable
   extend ActiveSupport::Concern
 

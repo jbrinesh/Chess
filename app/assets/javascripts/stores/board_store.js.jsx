@@ -4,7 +4,7 @@
   var _board = [];
   var _selected = null;
   var _valid_moves = [];
-  var _thinking = false;
+  var _thinking = true;
 
   var resetBoard = function(board){
     _selected = null;
@@ -93,7 +93,7 @@
         case Constants.POSITION_SELECTED:
         selectPosition(payload.position);
         resetValidMoves();
-        ApiUtil.validMoves(payload.position, BoardStore.board());
+        ApiUtil.validMoves(payload.position);
         BoardStore.emit(Constants.BOARD_CHANGED);
         break;
 

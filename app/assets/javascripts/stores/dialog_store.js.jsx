@@ -44,7 +44,12 @@
         break;
 
         case Constants.RECIVED_BOARD:
-        _setMessages(["Please select a piece to move"]);
+        var messages = ["Please select a valid position to move to"];
+        payload.messages.forEach(function(message){
+          messages.push(message);
+        });
+        _setMessages(messages);
+
         DialogStore.emit(Constants.MESSAGES_CHANGED);
         break;
 

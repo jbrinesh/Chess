@@ -1,7 +1,3 @@
-# require "byebug"
-# require_relative 'rook'
-# require_relative 'bishop'
-
 module Pieceable
   extend ActiveSupport::Concern
 

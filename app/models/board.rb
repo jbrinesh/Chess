@@ -8,15 +8,19 @@ class Board < ActiveRecord::Base
   belongs_to :game
 
   def self.createBoard(board, game)
+    new_board =[]
     board.each do |piece|
-      Board.create(
+      new_piece = Board.new(
         game_id: game.id,
         row_pos: piece[:position][0],
         col_pos: piece[:position][1],
         color: piece[:color],
         kind: piece[:kind]
       )
+      new_piece.save!
+      new_board << new_piece
     end
+    return new_board
   end
 
   def self.get_valid_moves(pos, board)

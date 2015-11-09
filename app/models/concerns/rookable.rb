@@ -1,5 +1,3 @@
-# require_relative "piece"
-
 module Rookable
   extend ActiveSupport::Concern
 

@@ -13,9 +13,8 @@
       })
     },
 
-    validMoves: function(pos, board){
+    validMoves: function(pos){
       var params = {
-        board: board,
         pos: pos
       }
       $.ajax({
@@ -29,11 +28,10 @@
       })
     },
 
-    playTurn: function(from_pos, to_pos, board){
+    playTurn: function(from_pos, to_pos){
       var params = {
         from_pos: from_pos,
-        to_pos: to_pos,
-        board: board
+        to_pos: to_pos
       }
       $.ajax({
         url: "api/board/play_turn",
@@ -42,7 +40,6 @@
         data: params,
         success: function(response){
           ApiActions.recivedBoard(response);
-          // DialogActions.newMessages([]);
         }
       })
     },
@@ -54,7 +51,6 @@
         dataType: "json",
         success: function(response){
           ApiActions.recivedBoard(response);
-          // DialogActions.newMessages([]);
         }
       })
     }

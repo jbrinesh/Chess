@@ -4,14 +4,16 @@ class Api::GameController < ApplicationController
     result = Game.new_game
     board = result[0]
     game = result[1]
-    Board.createBoard(board, game)
+    @board = Board.createBoard(board, game)
     add_token(game.session_token)
-    render json: board
+    @messages = []
+    render 'board'
   end
 
   def continue_game
     session_token = session[:session_token]
     @board = Game.find_game(session_token)
+    @messages = []
     render 'board'
   end
 

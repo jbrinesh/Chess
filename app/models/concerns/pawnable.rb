@@ -1,6 +1,3 @@
-# require_relative "piece"
-# require "byebug"
-
 module Pawnable
   extend ActiveSupport::Concern
 

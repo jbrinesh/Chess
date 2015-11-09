@@ -1,5 +1,3 @@
-# require_relative "piece"
-
 module Queenable
   extend ActiveSupport::Concern
 

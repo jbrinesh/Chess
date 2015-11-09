@@ -14,6 +14,7 @@ class Api::BoardController < ApplicationController
     @board = Board.make_move(from_pos, to_pos, @board)
     ai_move = Board.get_AI_move(@board)
     @board = Board.make_move(ai_move[0], ai_move[1], @board)
+    @message = ["this is a test of a back end message"]
     sleep (2)
     render 'board'
   end
