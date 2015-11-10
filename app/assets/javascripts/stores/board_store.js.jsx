@@ -85,7 +85,9 @@
       switch (payload.actionType){
 
         case Constants.RECIVED_BOARD:
-        toggleThinking();
+        if(payload.messages.indexOf("Game Over") === -1){
+          toggleThinking();
+        }
         resetBoard(payload.board);
         BoardStore.emit(Constants.BOARD_CHANGED);
         break;

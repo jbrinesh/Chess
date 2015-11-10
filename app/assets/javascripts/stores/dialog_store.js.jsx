@@ -44,8 +44,11 @@
         break;
 
         case Constants.RECIVED_BOARD:
-        var messages = ["Please select a valid position to move to"];
+        var messages = ["Please select a white piece"];
         payload.messages.forEach(function(message){
+          if (message === "Game Over"){
+            messages = [];
+          }
           messages.push(message);
         });
         _setMessages(messages);

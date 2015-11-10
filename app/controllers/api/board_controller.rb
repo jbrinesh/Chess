@@ -20,9 +20,9 @@ class Api::BoardController < ApplicationController
     @pieces = Piece.make_move(from_pos, to_pos, @pieces)
 
     if board.stalemate? && board.check?("black")
-      @messages = ["The AI is in checkmate, You Won!", "Game Over"]
+      @messages = ["Game Over","The AI is in checkmate, You Won!"]
     elsif board.stalemate?
-      @messages = ["The game is a stalemate", "Game Over"]
+      @messages = ["Game Over", "The game is a stalemate"]
     else
       ai_move = board.get_AI_move
       board.move(ai_move[0], ai_move[1])
@@ -32,11 +32,11 @@ class Api::BoardController < ApplicationController
     if board.check?("white")
       @messages = ["You are in check"]
     elsif board.stalemate? && board.check?("white")
-      @messages = ["You are in checkmate","Game Over"]
+      @messages = ["Game Over", "You are in checkmate"]
     elsif board.stalemate?
-      @messages = ["The game is a stalemate", "Game Over"]
+      @messages = ["Game Over", "The game is a stalemate"]
     end
-    
+
     render 'api/pieces'
   end
 
