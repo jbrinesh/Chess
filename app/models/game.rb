@@ -1,7 +1,7 @@
 class Game < ActiveRecord::Base
   validates :session_token, :status, presence: true
 
-  has_many :boards
+  has_many :pieces
 
   def self.new_game
     session_token = SecureRandom.urlsafe_base64(16)
@@ -11,8 +11,8 @@ class Game < ActiveRecord::Base
   end
 
   def self.find_game(session_token)
-    result = Game.where('games.session_token = ?', session_token).includes(:boards)
-    return result.first.boards
+    result = Game.where('games.session_token = ?', session_token).includes(:pieces)
+    return result.first.pieces
   end
 
   NEW_BOARD = [

@@ -1,22 +1,31 @@
 class Api::BoardController < ApplicationController
 
   def valid_moves
-     @board = Game.find_game(session[:session_token])
-     pos = params['pos']
-     moves = Board.get_valid_moves(pos, @board);
+     pieces = Game.find_game(session[:session_token])
+     @board = Board.new
+     @board.add_pieces(pieces)
+     pos = params['pos'].map{|el| el.to_i}
+     moves = @board.get_valid_moves(pos);
      render json: moves
   end
 
   def play_turn
-    @board = Game.find_game(session[:session_token])
+    @pieces = Game.find_game(session[:session_token])
     from_pos = params['from_pos'].map{|el| el.to_i}
     to_pos = params['to_pos'].map{|el| el.to_i}
-    @board = Board.make_move(from_pos, to_pos, @board)
-    ai_move = Board.get_AI_move(@board)
-    @board = Board.make_move(ai_move[0], ai_move[1], @board)
-    @message = ["this is a test of a back end message"]
-    sleep (2)
-    render 'board'
+    board = Board.new
+    board.add_pieces(@pieces)
+    board.move(from_pos, to_pos)
+    @pieces = Piece.make_move(from_pos, to_pos, @pieces)
+    ai_move = board.get_AI_move
+    board.move(ai_move[0], ai_move[1])
+    @pieces = Piece.make_move(ai_move[0], ai_move[1], @pieces)
+    # if @board.check?("white")
+    #   @message = ["You are in check"]
+    # else
+      @messgae = ["you are not in check"]
+    # end
+    render 'api/game/pieces'
   end
 
 
