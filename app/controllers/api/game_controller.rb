@@ -5,14 +5,14 @@ class Api::GameController < ApplicationController
     @pieces = Piece.createPieces(pieces, game)
     add_token(game.session_token)
     @messages = []
-    render 'api/game/pieces'
+    render 'api/pieces'
   end
 
   def continue_game
     session_token = session[:session_token]
     @pieces = Game.find_game(session_token)
     @messages = []
-    render 'api/game/pieces'
+    render 'api/pieces'
   end
 
 end

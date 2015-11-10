@@ -25,7 +25,7 @@ class Api::BoardController < ApplicationController
     # else
       @messgae = ["you are not in check"]
     # end
-    render 'api/game/pieces'
+    render 'api/pieces'
   end
 
 
