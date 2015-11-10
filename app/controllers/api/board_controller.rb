@@ -13,18 +13,30 @@ class Api::BoardController < ApplicationController
     @pieces = Game.find_game(session[:session_token])
     from_pos = params['from_pos'].map{|el| el.to_i}
     to_pos = params['to_pos'].map{|el| el.to_i}
+
     board = Board.new
     board.add_pieces(@pieces)
     board.move(from_pos, to_pos)
     @pieces = Piece.make_move(from_pos, to_pos, @pieces)
-    ai_move = board.get_AI_move
-    board.move(ai_move[0], ai_move[1])
-    @pieces = Piece.make_move(ai_move[0], ai_move[1], @pieces)
-    # if @board.check?("white")
-    #   @message = ["You are in check"]
-    # else
-      @messgae = ["you are not in check"]
-    # end
+
+    if board.stalemate? && board.check?("black")
+      @messages = ["The AI is in checkmate, You Won!", "Game Over"]
+    elsif board.stalemate?
+      @messages = ["The game is a stalemate", "Game Over"]
+    else
+      ai_move = board.get_AI_move
+      board.move(ai_move[0], ai_move[1])
+      @pieces = Piece.make_move(ai_move[0], ai_move[1], @pieces)
+    end
+
+    if board.check?("white")
+      @messages = ["You are in check"]
+    elsif board.stalemate? && board.check?("white")
+      @messages = ["You are in checkmate","Game Over"]
+    elsif board.stalemate?
+      @messages = ["The game is a stalemate", "Game Over"]
+    end
+    
     render 'api/pieces'
   end
 

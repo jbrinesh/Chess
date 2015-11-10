@@ -10,11 +10,9 @@ module Boardable
 
   def deep_dup
     temp_board = Board.new
-    self.grid.flatten.each do |piece|
-      unless piece.is_a?(nil)
-        position = piece.pos
-        temp_board[position] = piece.dup(temp_board)
-      end
+    self.pieces.each do |piece|
+      position = piece.pos
+      temp_board[position] = piece.dup(temp_board)
     end
     temp_board
   end

@@ -14,25 +14,34 @@ class Board
   end
 
   def get_AI_move
-    all_moves = self.all_black_moves
-    move = all_moves.shuffle.first
+    black_pieces = self.pieces.select {|piece| piece.color == "black"}
+    valid_moves = []
+    black_pieces.each do |piece|
+      piece_moves = self.get_valid_moves(piece.pos)
+      piece_moves.each do |to_pos|
+        move = [piece.pos, to_pos]
+        valid_moves << move
+      end
+    end
+    valid_moves.shuffle.first
   end
 
   def get_valid_moves(pos)
     piece = self[pos]
+    color = piece.color
     potential_moves = piece.potential_moves
     valid_moves = []
     potential_moves.each do |to_pos|
-      # if board_grid.valid_move?(pos, to_pos, "white")
+      if self.valid_move?(pos, to_pos, color)
         valid_moves << to_pos
-      # end
+      end
     end
     valid_moves
   end
 
   def all_black_moves
     all_moves = []
-    self.grid.flatten.each do |piece|
+    self.pieces.each do |piece|
       if piece && piece.color == "black"
         piece.potential_moves.each do |to_pos|
           move = [piece.pos, to_pos]
@@ -67,22 +76,22 @@ class Board
   end
 
   def check?(color)
-    king_pos = self.grid.flatten.find do |piece|
+    king_pos = self.pieces.find do |piece|
       piece.is_a?(King) && piece.color == color
     end.pos
-    op_pieces = self.grid.flatten.select { |piece| piece.color != color }
+    op_pieces = self.pieces.select { |piece| piece.color != color }
     op_pieces.any? { |piece| piece.potential_moves.include?(king_pos) }
   end
 
   def stalemate?
-    white_king = self.grid.flatten.find do |piece|
+    white_king = self.pieces.find do |piece|
       piece.is_a?(King) && piece.color == "white"
     end
-    black_king = self.grid.flatten.find do |piece|
+    black_king = self.pieces.find do |piece|
       piece.is_a?(King) && piece.color == "black"
     end
-    white_pieces = self.grid.flatten.select { |piece| piece.color == "white" }
-    black_pieces = self.grid.flatten.select { |piece| piece.color == "black" }
+    white_pieces = self.pieces.select { |piece| piece.color == "white" }
+    black_pieces = self.pieces.select { |piece| piece.color == "black" }
 
     return true if white_pieces.none? do |piece|
       piece.potential_moves.any? { |move| valid_move?(piece.pos, move, "white") }
