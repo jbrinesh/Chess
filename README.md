@@ -41,7 +41,7 @@ send down the entire board again with the move the client made performed as well
 as an AI move.
 
 ### Server utilizes a RESTful API
-(needs to be made restful, each class should have a GET method and a PATCH method)
+
 The API of the server is just four method, new_game, continue_game, valid_moves
 and play_turn
 

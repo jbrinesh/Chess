@@ -4,7 +4,7 @@
   root.ApiUtil = {
     newGame: function(){
       $.ajax({
-        url: "api/game/new_game",
+        url: "api/game",
         type: "GET",
         dataType: "json",
         success: function(response){
@@ -18,8 +18,8 @@
         pos: pos
       }
       $.ajax({
-        url: "api/board/valid_moves",
-        type: "POST",
+        url: "api/board",
+        type: "GET",
         dataType: "json",
         data: params,
         success: function(response){
@@ -34,8 +34,8 @@
         to_pos: to_pos
       }
       $.ajax({
-        url: "api/board/play_turn",
-        type: "POST",
+        url: "api/board",
+        type: "PATCH",
         dataType: "json",
         data: params,
         success: function(response){
@@ -46,8 +46,8 @@
 
     continueGame: function(){
       $.ajax({
-        url: "api/game/continue_game",
-        type: "GET",
+        url: "api/game",
+        type: "PATCH",
         dataType: "json",
         success: function(response){
           ApiActions.recivedBoard(response);
