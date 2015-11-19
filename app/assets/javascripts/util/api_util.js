@@ -13,6 +13,17 @@
       })
     },
 
+    continueGame: function(){
+      $.ajax({
+        url: "api/game",
+        type: "PATCH",
+        dataType: "json",
+        success: function(response){
+          ApiActions.recivedBoard(response);
+        }
+      })
+    },
+
     validMoves: function(pos){
       var params = {
         pos: pos
@@ -42,19 +53,6 @@
           ApiActions.recivedBoard(response);
         }
       })
-    },
-
-    continueGame: function(){
-      $.ajax({
-        url: "api/game",
-        type: "PATCH",
-        dataType: "json",
-        success: function(response){
-          ApiActions.recivedBoard(response);
-        }
-      })
     }
-
-
   }
 }(this));

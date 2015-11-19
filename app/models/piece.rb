@@ -17,7 +17,7 @@ class Piece < ActiveRecord::Base
       new_piece.save!
       new_pieces << new_piece
     end
-    return new_pieces 
+    return new_pieces
   end
 
   def self.make_move(from_pos, to_pos, pieces)

@@ -45,6 +45,8 @@ as an AI move.
 The API of the server is just four method, new_game, continue_game, valid_moves
 and play_turn
 
+https://github.com/jbrinesh/Chess/blob/master/config/routes.rb
+
 ### Use of Multi-class hierarchy and inheritance to keep code DRY
 
 ### AI player Using Game Theory (coming soon)
