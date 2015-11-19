@@ -13,9 +13,18 @@ module Aiable
           valid_moves << move
         end
       end
-      valid_moves.shuffle.first
+      best_move = nil
+      max_value = nil
+      valid_moves.each do |move|
+        temp_board = board.deep_dup
+        temp_board.move(move[0], move[1])
+        if max_value.nil? || max_value < temp_board.value("black")
+          max_value = temp_board.value("black")
+          best_move = move
+        end
+      end
+      return best_move
     end
 
   end
-
 end

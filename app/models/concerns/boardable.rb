@@ -10,6 +10,7 @@ module Boardable
     include Knightable
     include Bishopable
     include Rookable
+    include Valueable
 
     attr_accessor :grid
 
