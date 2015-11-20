@@ -4,27 +4,48 @@ module Aiable
   class AIplayer
 
     def self.get_move(board, color)
-      black_pieces = board.pieces.select {|piece| piece.color == color}
-      valid_moves = []
-      black_pieces.each do |piece|
-        piece_moves = board.get_valid_moves(piece.pos)
-        piece_moves.each do |to_pos|
-          move = [piece.pos, to_pos]
-          valid_moves << move
-        end
-      end
-      best_move = nil
-      max_value = nil
+      valid_moves = board.all_color_moves(color)
+      scored_moves = []
       valid_moves.each do |move|
         temp_board = board.deep_dup
         temp_board.move(move[0], move[1])
-        if max_value.nil? || max_value < temp_board.value("black")
-          max_value = temp_board.value("black")
-          best_move = move
-        end
+        score = self.min_max(temp_board, color, 2)
+        scored_moves << [move, score]
       end
-      return best_move
+      scored_moves.shuffle!
+      scored_moves.sort! {|a,b| a[1] <=> b[1]}
+      scored_moves.last.first
     end
 
+
+    def self.min_max(board, color, depth)
+      color == "white" ? oppoenant_color = "black" : oppoenant_color = "white"
+      if depth < 2
+        values = []
+        oppoenants_moves = board.all_color_moves(oppoenant_color)
+        oppoenants_moves.each do |move|
+          temp_board = board.deep_dup
+          temp_board.move(move[0], move[1])
+          values << temp_board.value(color)
+        end
+        return values.min
+      end
+
+      oppoenants_moves = board.all_color_moves(oppoenant_color)
+      min_set = []
+      oppoenants_moves.each do |move|
+        max_set = []
+        temp_board = board.deep_dup
+        temp_board.move(move[0], move[1])
+        ai_player_moves = temp_board.all_color_moves(color)
+        ai_player_moves.each do |ai_move|
+          sub_temp_board = temp_board.deep_dup
+          sub_temp_board.move(ai_move[0], ai_move[1])
+          max_set << self.min_max(sub_temp_board, color, depth - 1)
+        end
+        min_set << max_set.max
+      end
+      return min_set.min
+    end
   end
 end
