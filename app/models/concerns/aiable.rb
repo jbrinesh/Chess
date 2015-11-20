@@ -9,7 +9,7 @@ module Aiable
       valid_moves.each do |move|
         temp_board = board.deep_dup
         temp_board.move(move[0], move[1])
-        score = self.min_max(temp_board, color, 2)
+        score = self.min_max(temp_board, color, 1)
         scored_moves << [move, score]
       end
       scored_moves.shuffle!

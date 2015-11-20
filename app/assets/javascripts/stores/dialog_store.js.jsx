@@ -40,9 +40,7 @@
 
         case Constants.MAKE_MOVE:
         _setMessages([
-          "The AI Player is thinking, plaease wait",
-          "The server is computing a two level deep MinMax solution",
-          "This may take a couple of minutes"
+          "The AI Player is thinking, plaease wait"
         ]);
         DialogStore.emit(Constants.MESSAGES_CHANGED);
         break;
