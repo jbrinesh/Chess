@@ -9,7 +9,7 @@ module Valueable
       "Bishopable::Bishop" => 3.33,
       "Rookable::Rook" => 5.1,
       "Queenable::Queen" => 8.8,
-      "Kingable::King" => 0
+      "Kingable::King" => 10
     }
     player_score = 0
     oppenant_score = 0

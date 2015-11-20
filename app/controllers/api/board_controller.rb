@@ -24,7 +24,7 @@ class Api::BoardController < ApplicationController
     elsif board.stalemate?
       @messages = ["Game Over", "The game is a stalemate"]
     else
-      ai_move = Aiable::AIplayer.get_move(board, "black")
+      ai_move = board.get_move("black")
       board.move(ai_move[0], ai_move[1])
       @pieces = Piece.make_move(ai_move[0], ai_move[1], @pieces)
     end

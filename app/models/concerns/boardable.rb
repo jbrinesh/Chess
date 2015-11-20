@@ -11,6 +11,7 @@ module Boardable
     include Bishopable
     include Rookable
     include Valueable
+    include Aiable 
 
     attr_accessor :grid
 
@@ -18,9 +19,9 @@ module Boardable
       @grid = Array.new(8) { Array.new(8) { } }
     end
 
-    def get_AI_move(color)
-      AIable::AIplayer.get_move(self, color)
-    end
+    # def get_AI_move(color)
+    #   AIable::AIplayer.get_move(self, color)
+    # end
 
     def get_valid_moves(pos)
       piece = self[pos]
