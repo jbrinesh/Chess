@@ -8,7 +8,7 @@ module Aiable
     valid_moves.each do |move|
       temp_board = self.deep_dup
       temp_board.move(move[0], move[1])
-      value = temp_board.min_max(color, 2, 2)
+      value = temp_board.min_max(color, 2, 5)
       valued_moves << [move, value]
     end
     valued_moves.shuffle!.sort! {|a,b| a[1] <=> b[1]}
@@ -16,11 +16,11 @@ module Aiable
   end
 
   def min_max(color, depth, breadth)
-    color == "white" ? oppoenant_color = "black" : oppoenant_color = "white"
+    color == "black" ? oppoenant_color = "white" : oppoenant_color = "white"
     if depth < 2
       values = []
       oppoenants_moves = self.all_color_moves(oppoenant_color)
-      return 1000 if oppoenants_moves.nil?
+      return 100 if oppoenants_moves.empty?
       oppoenants_moves.each do |move|
         temp_board = self.deep_dup
         temp_board.move(move[0], move[1])
@@ -30,22 +30,24 @@ module Aiable
     end
 
     oppoenants_moves = self.all_color_moves(oppoenant_color)
-    return 1000 if oppoenants_moves.nil?
     scored_oppoenants_moves = score_moves(oppoenants_moves, oppoenant_color)
     scored_oppoenants_moves.shuffle!.sort! {|a,b| a[1] <=> b[1]}
     best_oppoenants_moves = scored_oppoenants_moves.last(breadth)
-    min_set = []
+    min_set = [100]
     best_oppoenants_moves.each do |move|
 
       temp_board = self.deep_dup
       temp_board.move(move[0][0], move[0][1])
-      ai_player_moves = temp_board.all_color_moves(color)
+      ai_moves = temp_board.all_color_moves(color)
+      scored_ai_moves = score_moves(ai_moves, color)
+      scored_ai_moves.shuffle!.sort! {|a,b| a[1] <=> b[1]}
+      best_ai_moves = scored_ai_moves.last(breadth)
 
-      max_set = []
-      ai_player_moves.each do |ai_move|
+      max_set = [-100]
+      best_ai_moves.each do |ai_move|
 
         sub_temp_board = temp_board.deep_dup
-        sub_temp_board.move(ai_move[0], ai_move[1])
+        sub_temp_board.move(ai_move[0][0], ai_move[0][1])
         max_set << sub_temp_board.min_max(color, depth - 1, breadth)
 
       end

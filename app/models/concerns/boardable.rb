@@ -11,7 +11,7 @@ module Boardable
     include Bishopable
     include Rookable
     include Valueable
-    include Aiable 
+    include Aiable
 
     attr_accessor :grid
 
@@ -74,7 +74,7 @@ module Boardable
 
     def check?(color)
       king_pos = self.pieces.find do |piece|
-        piece.is_a?(King) && piece.color == color
+        piece.is_a?(Kingable::King) && piece.color == color
       end.pos
       op_pieces = self.pieces.select { |piece| piece.color != color }
       op_pieces.any? { |piece| piece.potential_moves.include?(king_pos) }
