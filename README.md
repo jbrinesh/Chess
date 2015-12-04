@@ -49,8 +49,10 @@ https://github.com/jbrinesh/Chess/blob/master/config/routes.rb
 
 ### Use of Multi-class hierarchy and inheritance to keep code DRY
 
-### AI player Using Game Theory (coming soon)
+### AI player Using Game Theory
 
 The AI player computes its optimal move using a combination or early and end game
 piecewise tables to value the board and a 2 deep MinMax algorithm to compute
 the best move.
+
+https://github.com/jbrinesh/Chess/blob/master/app/models/concerns/aiable.rb
